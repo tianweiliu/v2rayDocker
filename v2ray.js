@@ -1,16 +1,16 @@
 var qrcode = require('qrcode-terminal');
 var fs = require('fs');
-fs.readFile('sebs.js', 'utf8', function (err, data) {
-  if (err) throw err;
-     node = JSON.parse(data);
+fs.readFile('sebs.json', 'utf8', function (err, data) {
+    if (err) throw err;
+    node = JSON.parse(data);
     console.log('-----------------iOS小火箭链接--------------------')
     console.log(ios(node).toString())
     console.log('-----------------安卓 v2rayNG链接-----------------')
     console.log(android(node).toString())
-    qrcode.generate(ios(node).toString(), {small: true},function (qrcode) {
-    console.log('-----------------iOS 小火箭二维码------------------')
-    console.log(qrcode);
-});
+    qrcode.generate(ios(node).toString(), { small: true }, function (qrcode) {
+        console.log('-----------------iOS 小火箭二维码------------------')
+        console.log(qrcode);
+    });
 });
 function ios(node) {
     !node.method ? node.method = 'chacha20-poly1305' : ''

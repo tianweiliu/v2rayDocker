@@ -44,24 +44,14 @@ RUN apk upgrade --update \
   && echo ${TZ} > /etc/timezone \
   && rm -rf /tmp/v2ray /var/cache/apk/*
 
-# ADD entrypoint.sh /entrypoint.sh
 WORKDIR /srv
-# node
+
 # install node 
 RUN apk add --no-cache util-linux
 RUN apk add --update nodejs nodejs-npm
 COPY package.json /srv/package.json
 RUN npm install
 COPY v2ray.js /srv/v2ray.js
-
-ARG version="1.0.3"
-LABEL caddy_version="$version"
-
-# Let's Encrypt Agreement
-ENV ACME_AGREE="false"
-
-# Telemetry Stats
-ENV ENABLE_TELEMETRY="false"
 
 RUN apk add --no-cache openssh-client git
 
@@ -72,16 +62,13 @@ COPY --from=builder /install/caddy /usr/bin/caddy
 RUN /usr/bin/caddy -version
 RUN /usr/bin/caddy -plugins
 
-
 VOLUME /root/.caddy /srv
-# WORKDIR /srv
 
 COPY Caddyfile /etc/Caddyfile
 COPY index.html /srv/index.html
-# COPY package.json /etc/package.json
+
 # install process wrapper
 COPY --from=builder /go/bin/parent /bin/parent
 ADD caddy.sh /caddy.sh
 EXPOSE 443 80
 ENTRYPOINT ["/caddy.sh"]
-# CMD ["--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=$ACME_AGREE"]

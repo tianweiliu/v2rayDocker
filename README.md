@@ -1,6 +1,6 @@
-# 一键 V2ray websocket + TLS
+# 一键 V2ray http2 + TLS
 
-一键就完事了，扫描二维码 或者 复制 vmess链接 无需关心复杂的V2ray 配置，websocket + tls 更安全，伪装更好。
+一键就完事了，扫描二维码 或者 复制 vmess链接 无需关心复杂的V2ray 配置，http2 + tls 更安全，伪装更好。
 
 * 自动生成 UUID （调用系统UUID库）
 * 默认使用 caddy 自动获取证书
@@ -16,11 +16,11 @@
  * 请将下面命令中的 YOURDOMAIN.COM（域名）替换成自己的域名（此IP解析的域名）！！！
 
 ```
-sudo docker run -d --rm --name v2ray -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy tianweiliu/v2ray_ws YOURDOMAIN.COM V2RAY_WS && sleep 3s && sudo docker logs v2ray
+sudo docker run -d --rm --name v2ray -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy tianweiliu/v2ray_h2 YOURDOMAIN.COM v2ray_h2 0.0.0.0 && sleep 3s && sudo docker logs v2ray
 ```
 * 如果你想指定固定 uuid 的话， 0890b53a-e3d4-4726-bd2b-52574e8588c4 这个 uuid 改为你自己的，https://www.uuidgenerator.net/ 这个网站可以生成随机 uuid。
 ```
-sudo docker run -d --rm --name v2ray -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy tianweiliu/v2ray_ws YOURDOMAIN.COM V2RAY_WS 0890b53a-e3d4-4726-bd2b-52574e8588c4 && sleep 3s && sudo docker logs v2ray
+sudo docker run -d --rm --name v2ray -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy tianweiliu/v2ray_h2 YOURDOMAIN.COM v2ray_h2 0.0.0.0 0890b53a-e3d4-4726-bd2b-52574e8588c4 && sleep 3s && sudo docker logs v2ray
 ```
 
 * 命令执行完会显示链接信息，如果想查看链接信息，执行下面命令即可
